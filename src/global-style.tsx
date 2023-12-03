@@ -25,8 +25,7 @@ const GlobalStyle = createGlobalStyle`
     body{
         line-height: 1;
         font-family: Pretendard;
-        
-        background: linear-gradient(180deg,#9397ff,#aeb1ff 30%,#fff 75%,#fff);
+      
         background: #fff;
         color: #fff;
         
