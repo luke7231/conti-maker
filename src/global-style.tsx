@@ -24,9 +24,10 @@ const GlobalStyle = createGlobalStyle`
     }
     body{
         line-height: 1;
-        font-family: 'Noto Sans KR', sans-serif;
-        // background-color: rgba(0,0,0,0.87);
+        font-family: Pretendard;
+        
         background: linear-gradient(180deg,#9397ff,#aeb1ff 30%,#fff 75%,#fff);
+        background: #fff;
         color: #fff;
         
         margin-bottom: 100px;
@@ -101,7 +102,6 @@ const GlobalStyle = createGlobalStyle`
         color: white;
         font-size: 14px;
         text-align: center;
-        // font-family:  'Montserrat', 'Spoqa Han Sans Neo', sans-serif;;
       }
       }
 `;
