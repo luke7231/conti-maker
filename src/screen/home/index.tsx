@@ -1,5 +1,12 @@
+import { useRef, useState } from "react";
+import YouTube, { YouTubeEvent, YouTubeProps } from "react-youtube";
+import { YouTubePlayer } from "youtube-player/dist/types";
 import styled from "styled-components";
 
+interface Keyword {
+    icon: string;
+    title: string;
+}
 const data = [
     {
         icon: "✝️",
@@ -59,7 +66,8 @@ const GridWrap = styled.div`
     }
     padding: 24px;
 `;
-const Item = styled.div`
+const Item = styled.div<{ isSelected: boolean }>`
+    border: ${({ isSelected }) => (isSelected ? "2px solid #999" : "")};
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -79,14 +87,48 @@ const Keyword = styled.div`
     color: #000;
 `;
 const Home = () => {
+    const playerRef = useRef<YouTube>(null);
+    const [opts, setOpts] = useState<YouTubeProps["opts"]>({
+        height: "400",
+        width: "640",
+        playerVars: {
+            start: 10,
+        },
+    });
+    const [player, setPlayer] = useState<YouTubePlayer | null>(null);
+    const [selectedKeywords, setSelectedKeywords] = useState<Keyword[]>([]);
+    const onReady = (event: YouTubeEvent) => {
+        // onReady 이벤트 핸들러에서 YouTube 플레이어 객체를 가져와 상태로 저장합니다.
+        setPlayer(event.target);
+    };
+
+    const handleSeekTo30Seconds = () => {
+        // 플레이어가 준비된 상태에서 seekTo 메서드를 사용하여 특정 시간으로 이동합니다.
+        if (player) {
+            console.log(player);
+            player.seekTo(20, true);
+            player.playVideo();
+        }
+    };
+    const handleMemberClick = (keyword: Keyword) => {
+        const isMemberSelected = selectedKeywords.includes(keyword);
+        setSelectedKeywords((prevselectedKeywords) =>
+            isMemberSelected
+                ? prevselectedKeywords.filter((selectedKeywords) => selectedKeywords !== keyword)
+                : [...prevselectedKeywords, keyword],
+        );
+    };
+    console.log(selectedKeywords);
     return (
         <div>
+            {/* <YouTube ref={playerRef} onReady={onReady} videoId="HHupVXtnjRs" opts={opts} /> */}
+            {/* <button onClick={handleSeekTo30Seconds}>0:20</button> */}
             <Title>키워드를 골라주세요!</Title>
             <SubTitle>주제에 맞는 찬양들을 추천해줘요</SubTitle>
             <GridWrap>
                 {data.map((menu) => {
                     return (
-                        <Item>
+                        <Item onClick={() => handleMemberClick(menu)} isSelected={selectedKeywords.includes(menu)}>
                             <Icon>{menu.icon}</Icon>
                             <Keyword>{menu.title}</Keyword>
                         </Item>
