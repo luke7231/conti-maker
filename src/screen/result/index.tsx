@@ -1,13 +1,11 @@
 /* eslint-disable import/no-unresolved */
 import styled from "styled-components";
 import Img1 from "../../images/img1.jpeg";
-const data = [
-    {
-        ton: "C",
-        title: "다시 복음 앞에",
-        img: "https://mblogthumb-phinf.pstatic.net/MjAxODA4MjRfMjg1/MDAxNTM1MDczMTYyNDIw.mhrsOV8yAgTSrMrJ6Wn4UrBFgyXtE47lwX9hmWyrXIYg.vHEa1vrB40GX6sFycOfU6FZklKEQi8HhxrgtUGARpuUg.JPEG.emr31001/-%EB%8B%A4%EC%8B%9C_%EB%B3%B5%EC%9D%8C_%EC%95%9E%EC%97%90_C.jpg?type=w800",
-    },
-];
+import { useEffect, useState } from "react";
+import { getByKeywords } from "../../api/supabase";
+import { useLocation } from "react-router-dom";
+import { Conti } from "../../types/supabase";
+
 const Title = styled.div`
     font-size: 24px;
     font-weight: 500;
@@ -19,6 +17,7 @@ const Wrap = styled.div`
     width: 100%;
     height: 100%;
     display: flex;
+    overflow-x: scroll;
 
     padding: 24px;
 `;
@@ -27,8 +26,7 @@ const Item = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    // background: #fff;
-    aspect-ratio: 1;
+    margin-right: 24px;
 `;
 
 const Keyword = styled.div`
@@ -37,26 +35,55 @@ const Keyword = styled.div`
     font-weight: 600;
     color: #000;
 `;
-const Ton = styled.div``;
 const Image = styled.img`
-    width: 100%;
+    height: 420px;
     object-fit: cover;
     border-radius: 26px;
     margin-top: 24px;
+    border: 1px solid #999;
+`;
+const NoImage = styled.div`
+    height: 420px;
+    width: 300px;
+    background: #fff;
+    border-radius: 26px;
+    margin-top: 24px;
+    border: 1px solid #999;
+    justify-content: center;
+    align-items: center;
+    color: #000;
 `;
 const Result = () => {
+    const location = useLocation();
+    const keywords = location.state.keywords;
+    const [data, setdata] = useState<Conti[] | null>();
+    useEffect(() => {
+        const getSongByKeyword = async () => {
+            const { data } = await getByKeywords({ keywords });
+            setdata(data);
+            return data;
+        };
+        getSongByKeyword();
+    }, []);
     return (
         <div>
             <Title>콘티가 완성되었어요!</Title>
+            {keywords.map((keyword: string) => {
+                return <div>{keyword}</div>;
+            })}
             {/* <SubTitle>주제에 맞는 찬양들을 추천해줘요</SubTitle> */}
             <Wrap>
-                {data.map((menu, index) => {
+                {data?.map((menu, index) => {
                     return (
                         <Item>
                             <Keyword>
                                 {index + 1}.{" " + menu.title}
                             </Keyword>
-                            <Image src={menu.img} />
+                            {menu.img ? (
+                                <Image src={menu.img || ""} />
+                            ) : (
+                                <NoImage>{"죄송합니다 아직 악보가 없습니다!"}</NoImage>
+                            )}
                         </Item>
                     );
                 })}
