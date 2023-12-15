@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -56,6 +57,7 @@ const Button = styled.button`
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);
 `;
 const Intro = () => {
+    const navigate = useNavigate();
     return (
         <Container>
             <TitleWrap>
@@ -64,7 +66,7 @@ const Intro = () => {
                     <br /> 어떤 찬양을 선택하지..
                 </SubTitle>
                 <Title style={{ wordBreak: "keep-all" }}>콘티에 넣을 찬양을 추천해드립니다!</Title>
-                <Button>바로 시작하기!</Button>
+                <Button onClick={() => navigate("/")}>바로 시작하기!</Button>
             </TitleWrap>
         </Container>
     );
