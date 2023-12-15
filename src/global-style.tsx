@@ -26,7 +26,7 @@ const GlobalStyle = createGlobalStyle`
         line-height: 1;
         font-family: Pretendard;
       
-        background: #fff;
+        background-color: rgb(241 245 249);
         color: #fff;
         
         margin-bottom: 100px;
