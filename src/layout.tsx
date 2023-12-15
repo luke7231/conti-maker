@@ -3,7 +3,6 @@ import LogoImg from "./images/conti-logo.png";
 const Wrapper = styled.section`
     height: 100%;
     width: 100%;
-    margin: 0 auto !important;
     background-color: rgb(241 245 249);
 `;
 const Header = styled.div`
