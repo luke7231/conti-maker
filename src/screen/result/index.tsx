@@ -7,48 +7,57 @@ import { Conti } from "../../types/supabase";
 import YouTube, { YouTubeEvent, YouTubePlayer, YouTubeProps } from "react-youtube";
 import { SONG_KEYWORDS } from "../home";
 
-const Container = styled.div``;
+const Container = styled.div`
+    height: 100%;
+    overflow: scroll;
+    padding: 3rem;
+    @media (max-width: 767px) {
+        padding: 1rem;
+        padding-top: 3rem;
+    }
+`;
 const Content = styled.div`
     display: flex;
     flex-direction: column;
-    margin-top: 48px;
 `;
 const Title = styled.div`
-    font-size: 24px;
-    font-weight: 500;
-    padding-left: 24px;
-    padding-top: 24px;
-    color: #fff;
+    font-size: 2rem;
+    font-weight: 900;
+    color: #111;
+    text-align: center;
+    margin-bottom: 3rem;
+    @media (max-width: 767px) {
+        font-size: 1.5rem;
+    }
 `;
 const Wrapper = styled.div`
-    text-align: center;
+    background-color: #fff;
+    border-radius: 45px;
+    width: 100%;
+    display: grid;
+    margin-bottom: 5rem;
+`;
+const ContiList = styled.div`
+    overflow: hidden;
+    width: 100%;
 `;
 const Contis = styled.div`
-    width: 100%;
-    height: 100%;
     display: flex;
     overflow-x: scroll;
-
-    padding: 24px;
+    padding: 2rem;
     text-align: start;
     margin-bottom: 48px;
 `;
 const Keyword = styled.div`
     color: #111;
-    font-weight: 600;
-    font-size: 24px;
-    margin: 10px 0;
-`;
-const PartitionWrap = styled.div`
-    width: 100%;
-    // padding: 0 36px;
-    // margin-top: 20px;
-    display: flex;
-    justify-content: center;
-`;
-const Partition = styled.div`
-    width: 100%;
-    border-top: 1px solid #999;
+    font-weight: 800;
+    font-size: 2.5rem;
+    margin-left: 36px;
+    margin-top: 36px;
+
+    @media (max-width: 767px) {
+        font-size: 2rem;
+    }
 `;
 const Song = styled.div`
     width: 100%;
@@ -58,26 +67,23 @@ const Song = styled.div`
 `;
 
 const SongTitle = styled.div`
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 1.3rem;
+    font-weight: 400;
     color: #111;
     padding-left: 4px;
 `;
 const Image = styled.img`
-    height: 420px;
+    height: 24rem;
     object-fit: contain;
-    border-radius: 26px;
     margin-top: 24px;
-    // border: 1px solid #999;
+    padding: 12px;
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.35);
 `;
 const NoImage = styled.div`
     height: 420px;
     width: 300px;
     background: #fff;
-    border-radius: 26px;
     margin-top: 24px;
-    // border: 1px solid #999;
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: center;
@@ -96,7 +102,23 @@ const ViController = styled.div``;
 const Shortcut = styled.div`
     color: #111;
 `;
+const OuterContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+`;
+const SidePannel = styled.div`
+    display: flex;
+    width: 340px;
+    height: 100%;
+    background-color: rgb(248 250 252);
+    position: sticky;
 
+    @media (max-width: 767px) {
+        display: none;
+    }
+`;
 const getYoutubeVideoId = (youtubeUrl: string) => {
     const regex = /youtu\.be\/([^?]+)/;
     const match = youtubeUrl.match(regex);
@@ -168,81 +190,84 @@ const Result = () => {
 
     return (
         <Container>
-            <Title>콘티가 완성되었어요!</Title>
-            <Content>
-                {data &&
-                    Object.entries(data).map(([keyword, contis]) => {
-                        return (
-                            <Wrapper>
-                                <PartitionWrap>
-                                    <Partition />
-                                </PartitionWrap>
-                                <Keyword>
-                                    {keyword} {findIconByTitle(keyword)}
-                                </Keyword>
-                                <PartitionWrap>
-                                    <Partition />
-                                </PartitionWrap>
-                                <Contis>
-                                    {contis.map((menu, index) => {
-                                        return (
-                                            <div style={{ marginRight: 24 }}>
-                                                <Song>
-                                                    <SongTitle>
-                                                        {index + 1}.{" " + menu.title}
-                                                    </SongTitle>
-                                                    {menu.img ? (
-                                                        <Image src={menu.img || ""} />
-                                                    ) : (
-                                                        <NoImage>
-                                                            {"죄송합니다"}
-                                                            <br />
-                                                            {"아직 악보가 없습니다!"}
-                                                        </NoImage>
-                                                    )}
-                                                    {/* <Image src={menu.img || ""} /> */}
-                                                </Song>
+            <OuterContainer>
+                {/* <SidePannel>asd</SidePannel> */}
+                <Content>
+                    <Title>콘티가 완성되었어요!</Title>
+                    {data &&
+                        Object.entries(data).map(([keyword, contis]) => {
+                            return (
+                                <Wrapper>
+                                    <Keyword>
+                                        {keyword}
+                                        {findIconByTitle(keyword)}
+                                    </Keyword>
+                                    <ContiList>
+                                        <Contis>
+                                            {contis.map((menu, index) => {
+                                                return (
+                                                    <div style={{ marginRight: 24 }}>
+                                                        <Song>
+                                                            <SongTitle>
+                                                                {index + 1}.{" " + menu.title}
+                                                            </SongTitle>
+                                                            {menu.img ? (
+                                                                <Image src={menu.img || ""} />
+                                                            ) : (
+                                                                <NoImage>
+                                                                    {"죄송합니다"}
+                                                                    <br />
+                                                                    {"아직 악보가 없습니다!"}
+                                                                </NoImage>
+                                                            )}
+                                                            {/* <Image src={menu.img || ""} /> */}
+                                                        </Song>
 
-                                                {menu.youtube_link ? (
-                                                    <VideoWrapper>
-                                                        <div
-                                                            style={{
-                                                                borderRadius: 20,
-                                                                padding: 10,
-                                                                background: "#fff",
-                                                                overflow: "hidden",
-                                                                // background: "pink",
-                                                            }}
-                                                        >
-                                                            <YouTube
-                                                                // style={{ minWidth: 320 }}
-                                                                // ref={playerRef}
-                                                                onReady={onVideoReady(index)}
-                                                                videoId={getYoutubeVideoId(menu.youtube_link)}
-                                                                opts={opts}
-                                                            />
-                                                        </div>
-                                                        <ViController>
-                                                            {menu.verse ? (
-                                                                <Shortcut
-                                                                    onClick={() =>
-                                                                        handleSeekTo(index, menu.verse as number)
-                                                                    }
+                                                        {/* {menu.youtube_link ? (
+                                                            <VideoWrapper>
+                                                                <div
+                                                                    style={{
+                                                                        borderRadius: 20,
+                                                                        padding: 10,
+                                                                        background: "#fff",
+                                                                        overflow: "hidden",
+                                                                        // background: "pink",
+                                                                    }}
                                                                 >
-                                                                    {menu.verse}
-                                                                </Shortcut>
-                                                            ) : null}
-                                                        </ViController>
-                                                    </VideoWrapper>
-                                                ) : null}
-                                            </div>
-                                        );
-                                    })}
-                                </Contis>
-                            </Wrapper>
-                        );
-                    })}
-            </Content>
+                                                                    <YouTube
+                                                                        // style={{ minWidth: 320 }}
+                                                                        // ref={playerRef}
+                                                                        onReady={onVideoReady(index)}
+                                                                        videoId={getYoutubeVideoId(menu.youtube_link)}
+                                                                        opts={opts}
+                                                                    />
+                                                                </div>
+                                                                <ViController>
+                                                                    {menu.verse ? (
+                                                                        <Shortcut
+                                                                            onClick={() =>
+                                                                                handleSeekTo(
+                                                                                    index,
+                                                                                    menu.verse as number,
+                                                                                )
+                                                                            }
+                                                                        >
+                                                                            {menu.verse}
+                                                                        </Shortcut>
+                                                                    ) : null}
+                                                                </ViController>
+                                                            </VideoWrapper>
+                                                        ) : null} */}
+                                                    </div>
+                                                );
+                                            })}
+                                        </Contis>
+                                    </ContiList>
+                                </Wrapper>
+                            );
+                        })}
+                </Content>
+            </OuterContainer>
         </Container>
     );
 };
