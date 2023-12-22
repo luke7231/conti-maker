@@ -92,7 +92,7 @@ const GridWrap = styled.div`
     }
 `;
 const Item = styled.div<{ isSelected: boolean }>`
-    border: ${({ isSelected }) => (isSelected ? "2px solid #999" : "")};
+    border: ${({ isSelected }) => (isSelected ? "2px solid #111" : "")};
     display: flex;
     flex-direction: column;
     justify-content: center;
