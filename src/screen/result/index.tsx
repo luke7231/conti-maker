@@ -117,8 +117,6 @@ const SidePannel = styled.div`
     }
 `;
 const Button = styled.button<{ color: string }>`
-    // background-color: ${({ color }) => (color ? color : "#111")};
-    // background: linear-gradient(to right, #ff006e, rgba(0, 0, 0, 0.1));
     background: #ff006e;
     padding: 12px;
     // width: 100px;
@@ -126,6 +124,7 @@ const Button = styled.button<{ color: string }>`
     border-radius: 10px;
     margin-top: 12px;
     font-weight: 900;
+    opacity: 0.8;
 `;
 const getYoutubeVideoId = (youtubeUrl: string) => {
     const regex = /youtu\.be\/([^?]+)/;
