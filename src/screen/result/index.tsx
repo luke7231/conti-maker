@@ -8,6 +8,7 @@ import YouTube, { YouTubeEvent, YouTubePlayer, YouTubeProps } from "react-youtub
 import { SONG_KEYWORDS } from "../home";
 import XCloseButtonImg from "../../images/x_close.png";
 import FullScreenLoading from "./full-screen-loading";
+import { convertSecondsToTime } from "../../utils/time-utils";
 
 const Container = styled.div`
     height: 100%;
@@ -288,7 +289,6 @@ const Result = () => {
                                                                                     setSelectedSong(menu);
                                                                                 }}
                                                                             >
-                                                                                {/* <Expand color="#fff" /> */}
                                                                                 OPEN
                                                                             </Button>
                                                                         </div>
@@ -300,7 +300,6 @@ const Result = () => {
                                                                         {"아직 악보가 없습니다!"}
                                                                     </NoImage>
                                                                 )}
-                                                                {/* <Image src={menu.img || ""} /> */}
                                                             </Song>
                                                         </div>
                                                     );
@@ -312,6 +311,8 @@ const Result = () => {
                             })}
                     </Content>
                 </OuterContainer>
+
+                {/* 모달 */}
                 {isOpenFullScreen.isOpen && (
                     <div
                         style={{
@@ -336,7 +337,7 @@ const Result = () => {
                                             <ShortcutWrap>
                                                 <ShortcutTitle>verse</ShortcutTitle>
                                                 <Shortcut onClick={() => handleSeekTo(selectedSong.verse as number)}>
-                                                    {selectedSong.verse}
+                                                    {convertSecondsToTime(selectedSong.verse)}
                                                 </Shortcut>
                                             </ShortcutWrap>
                                         ) : null}
@@ -346,7 +347,7 @@ const Result = () => {
                                                 <Shortcut
                                                     onClick={() => handleSeekTo(selectedSong["pre-corus"] as number)}
                                                 >
-                                                    {selectedSong["pre-corus"]}
+                                                    {convertSecondsToTime(selectedSong["pre-corus"])}
                                                 </Shortcut>
                                             </ShortcutWrap>
                                         ) : null}
@@ -356,7 +357,7 @@ const Result = () => {
                                                 <Shortcut
                                                     onClick={() => handleSeekTo(selectedSong.highlight as number)}
                                                 >
-                                                    {selectedSong.highlight}
+                                                    {convertSecondsToTime(selectedSong.highlight)}
                                                 </Shortcut>
                                             </ShortcutWrap>
                                         ) : null}
@@ -364,7 +365,7 @@ const Result = () => {
                                             <ShortcutWrap>
                                                 <ShortcutTitle>bridge</ShortcutTitle>
                                                 <Shortcut onClick={() => handleSeekTo(selectedSong.bridge as number)}>
-                                                    {selectedSong.bridge}
+                                                    {convertSecondsToTime(selectedSong.bridge)}
                                                 </Shortcut>
                                             </ShortcutWrap>
                                         ) : null}
@@ -372,7 +373,9 @@ const Result = () => {
                                             ? Object.entries(selectedSong.etc).map(([key, value]) => (
                                                   <ShortcutWrap>
                                                       <ShortcutTitle>{key}</ShortcutTitle>
-                                                      <Shortcut onClick={() => handleSeekTo(value)}>{value}</Shortcut>
+                                                      <Shortcut onClick={() => handleSeekTo(value)}>
+                                                          {convertSecondsToTime(value)}
+                                                      </Shortcut>
                                                   </ShortcutWrap>
                                               ))
                                             : null}
