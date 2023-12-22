@@ -106,21 +106,9 @@ const OuterContainer = styled.div`
     width: 100%;
     height: 100%;
 `;
-const SidePannel = styled.div`
-    display: flex;
-    width: 340px;
-    height: 100%;
-    background-color: rgb(248 250 252);
-    position: sticky;
-
-    @media (max-width: 767px) {
-        display: none;
-    }
-`;
 const Button = styled.button<{ color: string }>`
     background: #ff006e;
     padding: 12px;
-    // width: 100px;
     color: #fff;
     border-radius: 10px;
     margin-top: 12px;
@@ -185,14 +173,12 @@ const Result = () => {
 
     // 모달 열리면 뒤 스크롤 제거.
     useEffect(() => {
-        // Add or remove the 'modal-open' class to the body based on the modal state
         if (isOpenFullScreen.isOpen) {
             document.body.classList.add("modal-open");
         } else {
             document.body.classList.remove("modal-open");
         }
 
-        // Cleanup function to remove the class when the component unmounts
         return () => {
             document.body.classList.remove("modal-open");
         };
@@ -266,7 +252,6 @@ const Result = () => {
                                                                         <Image
                                                                             src={menu.img || ""}
                                                                             onLoad={() => handleImageLoad(index)}
-                                                                            // loaded={loadedImages[index]}
                                                                             alt={`Menu Image ${index + 1}`}
                                                                         />
 
