@@ -38,6 +38,9 @@ const GlobalStyle = createGlobalStyle`
         touch-action: pan-y;
       
     }
+    body.modal-open {
+      overflow: hidden;
+    }
     ol, ul{
         list-style: none;
     }
