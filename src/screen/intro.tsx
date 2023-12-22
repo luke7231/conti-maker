@@ -1,3 +1,4 @@
+import { Database, Mouse, MousePointer, Youtube } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -13,12 +14,20 @@ const Container = styled.div`
         grid-column: 2;
     }
 `;
-const TitleWrap = styled.div`
+const Section = styled.section`
     padding: 20px;
     padding-top: 48px;
     display: flex;
     align-items: center;
     flex-direction: column;
+`;
+const SectionRow = styled(Section)`
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    @media (max-width: 480px) {
+        grid-template-columns: 1fr;
+    }
 `;
 const SubTitle = styled.div`
     text-align: center;
@@ -56,18 +65,49 @@ const Button = styled.button`
     font-size: 18px;
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);
 `;
+const Card = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+`;
+const CardTitle = styled.div`
+    font-size: 2.5rem;
+    color: #111;
+    font-weight: 800;
+    margin-top: 2rem;
+`;
 const Intro = () => {
     const navigate = useNavigate();
+    const iconProps = {
+        size: 120,
+        color: "#ff66b2",
+        strokeWidth: 2,
+    };
     return (
         <Container>
-            <TitleWrap>
+            <Section>
                 <SubTitle>
                     말씀은 묵상했는데..
                     <br /> 어떤 찬양을 선택하지..
                 </SubTitle>
                 <Title style={{ wordBreak: "keep-all" }}>콘티에 넣을 찬양을 추천해드립니다!</Title>
                 <Button onClick={() => navigate("/")}>바로 시작하기!</Button>
-            </TitleWrap>
+            </Section>
+            <SectionRow>
+                <Card id="keyword">
+                    <Mouse {...iconProps} color="#ff66b2" />
+                    <CardTitle>몇 번의 클릭만!</CardTitle>
+                </Card>
+                <Card id="many_song">
+                    <Database {...iconProps} />
+                    <CardTitle>수백개의 찬양</CardTitle>
+                </Card>
+                <Card id="youtube_player">
+                    <Youtube {...iconProps} color="#ff66b2" />
+                    <CardTitle>Youtube 플레이어 제공</CardTitle>
+                </Card>
+            </SectionRow>
         </Container>
     );
 };
