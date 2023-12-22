@@ -94,6 +94,7 @@ const Intro = () => {
                 <Title style={{ wordBreak: "keep-all" }}>콘티에 넣을 찬양을 추천해드립니다!</Title>
                 <Button onClick={() => navigate("/")}>바로 시작하기!</Button>
             </Section>
+            {/* <Partition />
             <SectionRow>
                 <Card id="keyword">
                     <Mouse {...iconProps} color="#ff66b2" />
@@ -107,7 +108,7 @@ const Intro = () => {
                     <Youtube {...iconProps} color="#ff66b2" />
                     <CardTitle>Youtube 플레이어 제공</CardTitle>
                 </Card>
-            </SectionRow>
+            </SectionRow> */}
         </Container>
     );
 };
