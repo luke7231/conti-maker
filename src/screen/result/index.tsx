@@ -239,7 +239,7 @@ const Result = () => {
         };
     }, []); // 빈 배열은 컴포넌트가 마운트될 때와 언마운트될 때만 실행
 
-    const [loadedImages, setLoadedImages] = useState(Array(5).fill(false));
+    const [loadedImages, setLoadedImages] = useState(Array(keywords.length * 5).fill(false));
     const handleImageLoad = (index: number) => {
         setLoadedImages((prev) => {
             const updatedImages = [...prev];
@@ -255,7 +255,7 @@ const Result = () => {
                     <Content>
                         <Title>콘티가 완성되었어요!</Title>
                         {data &&
-                            Object.entries(data).map(([keyword, contis]) => {
+                            Object.entries(data).map(([keyword, contis], keywordIndex) => {
                                 return (
                                     <Wrapper>
                                         <Keyword>
@@ -268,7 +268,7 @@ const Result = () => {
                                                     return (
                                                         <div style={{ marginRight: 24 }}>
                                                             {menu.img ? (
-                                                                <Song loaded={loadedImages[index]}>
+                                                                <Song loaded={loadedImages[index * (keywordIndex + 1)]}>
                                                                     <SongTitle>
                                                                         {index + 1}.{" " + menu.title}
                                                                     </SongTitle>
@@ -276,7 +276,11 @@ const Result = () => {
                                                                     <div style={{ position: "relative" }}>
                                                                         <Image
                                                                             src={menu.img || ""}
-                                                                            onLoad={() => handleImageLoad(index)}
+                                                                            onLoad={() =>
+                                                                                handleImageLoad(
+                                                                                    index * (keywordIndex + 1),
+                                                                                )
+                                                                            }
                                                                             alt={`Menu Image ${index + 1}`}
                                                                         />
 
