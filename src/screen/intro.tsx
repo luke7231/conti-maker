@@ -1,7 +1,6 @@
-import { Database, Mouse, MousePointer, Youtube } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
+import * as amplitude from "@amplitude/analytics-browser";
 const Container = styled.div`
     width: 100%;
     height: 100vh;
@@ -20,14 +19,6 @@ const Section = styled.section`
     display: flex;
     align-items: center;
     flex-direction: column;
-`;
-const SectionRow = styled(Section)`
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-
-    @media (max-width: 480px) {
-        grid-template-columns: 1fr;
-    }
 `;
 const SubTitle = styled.div`
     text-align: center;
@@ -65,24 +56,13 @@ const Button = styled.button`
     font-size: 18px;
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);
 `;
-const Card = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-`;
-const CardTitle = styled.div`
-    font-size: 2.5rem;
-    color: #111;
-    font-weight: 800;
-    margin-top: 2rem;
-`;
 const Intro = () => {
     const navigate = useNavigate();
-    const iconProps = {
-        size: 120,
-        color: "#ff66b2",
-        strokeWidth: 2,
+    const onClickButton = () => {
+        amplitude.track("click button", {
+            where: "intro",
+        });
+        navigate("/keywords");
     };
     return (
         <Container>
@@ -92,7 +72,7 @@ const Intro = () => {
                     <br /> 어떤 찬양을 선택하지..
                 </SubTitle>
                 <Title style={{ wordBreak: "keep-all" }}>콘티에 넣을 찬양을 추천해드립니다!</Title>
-                <Button onClick={() => navigate("/")}>바로 시작하기!</Button>
+                <Button onClick={onClickButton}>바로 시작하기!</Button>
             </Section>
             {/* <Partition />
             <SectionRow>
