@@ -116,12 +116,20 @@ const Button = styled.button<{ color: string }>`
     opacity: 0.8;
 `;
 const getYoutubeVideoId = (youtubeUrl: string) => {
-    const regex = /youtu\.be\/([^?]+)/;
-    const match = youtubeUrl.match(regex);
+    const shortUrlRegex = /youtu\.be\/([^?]+)/;
+    const longUrlRegex = /[?&]v=([^&]+)/;
 
-    if (match) {
-        const videoCode = match[1];
-        return videoCode;
+    const shortUrlMatch = youtubeUrl.match(shortUrlRegex);
+    const longUrlMatch = youtubeUrl.match(longUrlRegex);
+
+    console.log(youtubeUrl);
+
+    if (shortUrlMatch) {
+        // Matched the short URL format
+        return shortUrlMatch[1];
+    } else if (longUrlMatch) {
+        // Matched the long URL format
+        return longUrlMatch[1];
     } else {
         console.error("Invalid YouTube URL");
         return "";
@@ -232,7 +240,6 @@ const Result = () => {
     }, []); // 빈 배열은 컴포넌트가 마운트될 때와 언마운트될 때만 실행
 
     const [loadedImages, setLoadedImages] = useState(Array(5).fill(false));
-
     const handleImageLoad = (index: number) => {
         setLoadedImages((prev) => {
             const updatedImages = [...prev];
@@ -260,11 +267,12 @@ const Result = () => {
                                                 {contis.map((menu, index) => {
                                                     return (
                                                         <div style={{ marginRight: 24 }}>
-                                                            <Song loaded={loadedImages[index]}>
-                                                                <SongTitle>
-                                                                    {index + 1}.{" " + menu.title}
-                                                                </SongTitle>
-                                                                {menu.img ? (
+                                                            {menu.img ? (
+                                                                <Song loaded={loadedImages[index]}>
+                                                                    <SongTitle>
+                                                                        {index + 1}.{" " + menu.title}
+                                                                    </SongTitle>
+
                                                                     <div style={{ position: "relative" }}>
                                                                         <Image
                                                                             src={menu.img || ""}
@@ -295,14 +303,20 @@ const Result = () => {
                                                                             </Button>
                                                                         </div>
                                                                     </div>
-                                                                ) : (
+                                                                </Song>
+                                                            ) : (
+                                                                <Song loaded={true}>
+                                                                    <SongTitle>
+                                                                        {index + 1}.{" " + menu.title}
+                                                                    </SongTitle>
+
                                                                     <NoImage>
                                                                         {"죄송합니다"}
                                                                         <br />
                                                                         {"아직 악보가 없습니다!"}
                                                                     </NoImage>
-                                                                )}
-                                                            </Song>
+                                                                </Song>
+                                                            )}
                                                         </div>
                                                     );
                                                 })}
