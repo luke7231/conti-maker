@@ -254,7 +254,7 @@ const Result = () => {
             <Container>
                 <OuterContainer>
                     <Content>
-                        <Title>콘티가 완성되었어요!</Title>
+                        <Title>찬양을 가져왔습니다!</Title>
                         {data &&
                             Object.entries(data).map(([keyword, contis], keywordIndex) => {
                                 return (
