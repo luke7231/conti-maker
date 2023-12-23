@@ -9,6 +9,7 @@ import { SONG_KEYWORDS } from "../home";
 import XCloseButtonImg from "../../images/x_close.png";
 import FullScreenLoading from "./full-screen-loading";
 import { convertSecondsToTime } from "../../utils/time-utils";
+import * as amplitude from "@amplitude/analytics-browser";
 
 const Container = styled.div`
     height: 100%;
@@ -301,6 +302,16 @@ const Result = () => {
                                                                                     const image = menu.img || "";
                                                                                     openFullScreen(image, videoId);
                                                                                     setSelectedSong(menu);
+                                                                                    amplitude.track(
+                                                                                        "click song button",
+                                                                                        {
+                                                                                            where: "result",
+                                                                                            song: {
+                                                                                                title: menu.title,
+                                                                                                keyword,
+                                                                                            },
+                                                                                        },
+                                                                                    );
                                                                                 }}
                                                                             >
                                                                                 OPEN

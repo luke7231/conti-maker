@@ -1,10 +1,7 @@
-import { useRef, useState } from "react";
-import YouTube, { YouTubeEvent, YouTubeProps } from "react-youtube";
-import { YouTubePlayer } from "youtube-player/dist/types";
+import { useState } from "react";
 import styled from "styled-components";
-import { getAll } from "../../api/supabase";
 import { useNavigate } from "react-router-dom";
-
+import * as amplitude from "@amplitude/analytics-browser";
 interface Keyword {
     icon: string;
     title: string;
@@ -165,6 +162,10 @@ const Home = () => {
         );
     };
     const onClickComplete = (keywords: string[]) => {
+        amplitude.track("click button", {
+            where: "keywords",
+            keywords: selectedKeywords,
+        });
         navigate("/result", {
             state: {
                 keywords,
