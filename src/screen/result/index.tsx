@@ -335,7 +335,7 @@ const Result = () => {
                                 <VideoWrapper>
                                     <YouTube onReady={onVideoReady} videoId={isOpenFullScreen.youtubeId} opts={opts} />
                                     <ViController>
-                                        {player && selectedSong?.verse ? (
+                                        {Boolean(player?.getIframe()) && selectedSong?.verse ? (
                                             <ShortcutWrap>
                                                 <ShortcutTitle>verse</ShortcutTitle>
                                                 <Shortcut onClick={() => handleSeekTo(selectedSong.verse as number)}>
@@ -343,7 +343,7 @@ const Result = () => {
                                                 </Shortcut>
                                             </ShortcutWrap>
                                         ) : null}
-                                        {selectedSong?.["pre-corus"] ? (
+                                        {Boolean(player?.getIframe()) && selectedSong?.["pre-corus"] ? (
                                             <ShortcutWrap>
                                                 <ShortcutTitle>pre-corus</ShortcutTitle>
                                                 <Shortcut
@@ -353,7 +353,7 @@ const Result = () => {
                                                 </Shortcut>
                                             </ShortcutWrap>
                                         ) : null}
-                                        {selectedSong?.highlight ? (
+                                        {Boolean(player?.getIframe()) && selectedSong?.highlight ? (
                                             <ShortcutWrap>
                                                 <ShortcutTitle>corus</ShortcutTitle>
                                                 <Shortcut
@@ -363,7 +363,7 @@ const Result = () => {
                                                 </Shortcut>
                                             </ShortcutWrap>
                                         ) : null}
-                                        {selectedSong?.bridge ? (
+                                        {Boolean(player?.getIframe()) && selectedSong?.bridge ? (
                                             <ShortcutWrap>
                                                 <ShortcutTitle>bridge</ShortcutTitle>
                                                 <Shortcut onClick={() => handleSeekTo(selectedSong.bridge as number)}>
@@ -371,7 +371,7 @@ const Result = () => {
                                                 </Shortcut>
                                             </ShortcutWrap>
                                         ) : null}
-                                        {selectedSong?.etc
+                                        {Boolean(player?.getIframe()) && selectedSong?.etc
                                             ? Object.entries(selectedSong.etc).map(([key, value]) => (
                                                   <ShortcutWrap>
                                                       <ShortcutTitle>{key}</ShortcutTitle>
