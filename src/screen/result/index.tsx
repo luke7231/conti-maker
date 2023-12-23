@@ -214,6 +214,23 @@ const Result = () => {
             }
         }
     }, [selectedSong]);
+    // ESC 키를 눌렀을 때 모달 닫기
+    const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === "Escape") {
+            setIsOpenFullScreen({ isOpen: false, img: "", youtubeId: "" });
+        }
+    };
+
+    useEffect(() => {
+        // 컴포넌트가 마운트되면 이벤트 리스너 추가
+        document.addEventListener("keydown", handleKeyDown);
+
+        // 컴포넌트가 언마운트되면 이벤트 리스너 제거
+        return () => {
+            document.removeEventListener("keydown", handleKeyDown);
+        };
+    }, []); // 빈 배열은 컴포넌트가 마운트될 때와 언마운트될 때만 실행
+
     const [loadedImages, setLoadedImages] = useState(Array(5).fill(false));
 
     const handleImageLoad = (index: number) => {
@@ -318,7 +335,7 @@ const Result = () => {
                                 <VideoWrapper>
                                     <YouTube onReady={onVideoReady} videoId={isOpenFullScreen.youtubeId} opts={opts} />
                                     <ViController>
-                                        {selectedSong?.verse ? (
+                                        {player && selectedSong?.verse ? (
                                             <ShortcutWrap>
                                                 <ShortcutTitle>verse</ShortcutTitle>
                                                 <Shortcut onClick={() => handleSeekTo(selectedSong.verse as number)}>
