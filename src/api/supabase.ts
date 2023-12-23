@@ -11,7 +11,12 @@ export async function getAll() {
     return data;
 }
 
-export async function getByKeywords({ keywords }: { keywords: string[] }) {
-    const { data, error } = await supabase.from("conti").select("*").or(`keyword.eq.찬양,keyword.eq.감사`);
+export async function getByKeyword({ keyword }: { keyword: string }) {
+    const data = await supabase.from("random_song").select("*").eq("keyword", keyword).limit(5);
+    return { data: data.data, error: data.error };
+}
+
+export async function getControlled() {
+    const { data, error } = await supabase.from("conti").select("*").not("verse", "is", null);
     return { data, error };
 }
